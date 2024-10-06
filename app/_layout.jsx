@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useFonts } from "expo-font";
 import "react-native-url-polyfill/auto";
 import { SplashScreen, Stack } from "expo-router";
-
+import { StripeProvider } from '@stripe/stripe-react-native';
 import GlobalProvider from "../context/GlobalProvider";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -39,13 +39,17 @@ const RootLayout = () => {
 
   return (
     <GlobalProvider>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="search/[query]" options={{ headerShown: false }} />
-        <Stack.Screen name="RideStarted" options={{ headerShown: false }} />
-      </Stack>
+      <StripeProvider publishableKey="pk_test_51PwpETJ4ZkClCq3J8UW9O4VJVSYTSqkkm2AfJmmozoop3HkNGwxJZSnzjzae3MJwanKn1QhKifD5lxN4lpxXBSu1001UiXRqOe">
+        
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="RideStarted" options={{ headerShown: false }} />
+            <Stack.Screen name="PaymentScreen" options={{ headerShown: false }} />
+            <Stack.Screen name="QrScanner" options={{ headerShown: false }} />
+          </Stack>
+      </StripeProvider>
     </GlobalProvider>
   );
 };

@@ -1,193 +1,109 @@
-// import { useState } from "react";
-// import { router } from "expo-router";
-// import { ResizeMode, Video } from "expo-av";
-// import * as DocumentPicker from "expo-document-picker";
-// import { SafeAreaView } from "react-native-safe-area-context";
-// import {
-//   View,
-//   Text,
-//   Alert,
-//   Image,
-//   TouchableOpacity,
-//   ScrollView,
-// } from "react-native";
-
-// import { icons } from "../../constants";
-// import { createVideoPost } from "../../lib/appwrite";
-// import { CustomButton, FormField } from "../../components";
-// import { useGlobalContext } from "../../context/GlobalProvider";
-
-// const Create = () => {
-//   const { user } = useGlobalContext();
-//   const [uploading, setUploading] = useState(false);
-//   const [form, setForm] = useState({
-//     title: "",
-//     video: null,
-//     thumbnail: null,
-//     prompt: "",
-//   });
-
-//   const openPicker = async (selectType) => {
-//     const result = await DocumentPicker.getDocumentAsync({
-//       type:
-//         selectType === "image"
-//           ? ["image/png", "image/jpg"]
-//           : ["video/mp4", "video/gif"],
-//     });
-
-//     if (!result.canceled) {
-//       if (selectType === "image") {
-//         setForm({
-//           ...form,
-//           thumbnail: result.assets[0],
-//         });
-//       }
-
-//       if (selectType === "video") {
-//         setForm({
-//           ...form,
-//           video: result.assets[0],
-//         });
-//       }
-//     } else {
-//       setTimeout(() => {
-//         Alert.alert("Document picked", JSON.stringify(result, null, 2));
-//       }, 100);
-//     }
-//   };
-
-//   const submit = async () => {
-//     if (
-//       (form.prompt === "") |
-//       (form.title === "") |
-//       !form.thumbnail |
-//       !form.video
-//     ) {
-//       return Alert.alert("Please provide all fields");
-//     }
-
-//     setUploading(true);
-//     try {
-//       await createVideoPost({
-//         ...form,
-//         userId: user.$id,
-//       });
-
-//       Alert.alert("Success", "Post uploaded successfully");
-//       router.push("/home");
-//     } catch (error) {
-//       Alert.alert("Error", error.message);
-//     } finally {
-//       setForm({
-//         title: "",
-//         video: null,
-//         thumbnail: null,
-//         prompt: "",
-//       });
-
-//       setUploading(false);
-//     }
-//   };
-
-//   return (
-//     <SafeAreaView className="bg-primary h-full">
-//       <ScrollView className="px-4 my-6">
-//         <Text className="text-2xl text-white font-psemibold">Upload Video</Text>
-
-//         <FormField
-//           title="Video Title"
-//           value={form.title}
-//           placeholder="Give your video a catchy title..."
-//           handleChangeText={(e) => setForm({ ...form, title: e })}
-//           otherStyles="mt-10"
-//         />
-
-//         <View className="mt-7 space-y-2">
-//           <Text className="text-base text-gray-100 font-pmedium">
-//             Upload Video
-//           </Text>
-
-//           <TouchableOpacity onPress={() => openPicker("video")}>
-//             {form.video ? (
-//               <Video
-//                 source={{ uri: form.video.uri }}
-//                 className="w-full h-64 rounded-2xl"
-//                 useNativeControls
-//                 resizeMode={ResizeMode.COVER}
-//                 isLooping
-//               />
-//             ) : (
-//               <View className="w-full h-40 px-4 bg-black-100 rounded-2xl border border-black-200 flex justify-center items-center">
-//                 <View className="w-14 h-14 border border-dashed border-secondary-100 flex justify-center items-center">
-//                   <Image
-//                     source={icons.upload}
-//                     resizeMode="contain"
-//                     alt="upload"
-//                     className="w-1/2 h-1/2"
-//                   />
-//                 </View>
-//               </View>
-//             )}
-//           </TouchableOpacity>
-//         </View>
-
-//         <View className="mt-7 space-y-2">
-//           <Text className="text-base text-gray-100 font-pmedium">
-//             Thumbnail Image
-//           </Text>
-
-//           <TouchableOpacity onPress={() => openPicker("image")}>
-//             {form.thumbnail ? (
-//               <Image
-//                 source={{ uri: form.thumbnail.uri }}
-//                 resizeMode="cover"
-//                 className="w-full h-64 rounded-2xl"
-//               />
-//             ) : (
-//               <View className="w-full h-16 px-4 bg-black-100 rounded-2xl border-2 border-black-200 flex justify-center items-center flex-row space-x-2">
-//                 <Image
-//                   source={icons.upload}
-//                   resizeMode="contain"
-//                   alt="upload"
-//                   className="w-5 h-5"
-//                 />
-//                 <Text className="text-sm text-gray-100 font-pmedium">
-//                   Choose a file
-//                 </Text>
-//               </View>
-//             )}
-//           </TouchableOpacity>
-//         </View>
-
-//         <FormField
-//           title="AI Prompt"
-//           value={form.prompt}
-//           placeholder="The AI prompt of your video...."
-//           handleChangeText={(e) => setForm({ ...form, prompt: e })}
-//           otherStyles="mt-7"
-//         />
-
-//         <CustomButton
-//           title="Submit & Publish"
-//           handlePress={submit}
-//           containerStyles="mt-7"
-//           isLoading={uploading}
-//         />
-//       </ScrollView>
-//     </SafeAreaView>
-//   );
-// };
-
-// export default Create;
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { View, Text, TouchableOpacity, Linking, StyleSheet } from 'react-native';
 
 const create = () => {
-  return (
-    <View>
-      <Text>create</Text>
-    </View>
-  )
-}
+  const handleEmail = () => {
+    Linking.openURL('mailto:support@greenwheelz.com');
+  };
 
-export default create
+  const handlePhoneCall = () => {
+    Linking.openURL('tel:+1234567890');
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.card}>
+        <Text style={styles.header}>Green Wheelz</Text>
+        <Text style={styles.subHeader}>Customer Support</Text>
+
+        <Text style={styles.purpose}>
+          Our mission is to assist you with any inquiries or issues related to your ride experience. Reach out to us via phone, email, or visit us at our office.
+        </Text>
+
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Phone:</Text>
+          <TouchableOpacity onPress={handlePhoneCall}>
+            <Text style={styles.link}>+1 234 567 890</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Email:</Text>
+          <TouchableOpacity onPress={handleEmail}>
+            <Text style={styles.link}>support@greenwheelz.com</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Address:</Text>
+          <Text style={styles.address}>123 Green Street, Wheelz City, GW 12345</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    padding: 20,
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    width: '90%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  header: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'green',
+    marginBottom: 10,
+  },
+  subHeader: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#555',
+    marginBottom: 20,
+  },
+  purpose: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#666',
+    marginBottom: 30,
+  },
+  infoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  label: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#333',
+  },
+  link: {
+    fontSize: 16,
+    color: '#6772e5',
+  },
+  address: {
+    flex: 1,
+    flexWrap: 'wrap',   // Ensures that the text wraps within the container
+    color: '#333',
+    paddingLeft:7,
+  }
+});
+
+export default create;

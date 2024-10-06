@@ -11,6 +11,11 @@ import logout from "../assets/icons/logout.png";
 import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
+import user from "../assets/icons/user.png";
+import bike from "../assets/icons/bike.png";
+import parking from "../assets/icons/parking.webp";
+import history from "../assets/icons/history.png";
+import phone from "../assets/icons/phone.png";
 
 export default {
   play,
@@ -26,4 +31,10 @@ export default {
   logout,
   eyeHide,
   eye,
+  user,
+  bike,
+  parking,
+  history,
+  phone,
+
 };

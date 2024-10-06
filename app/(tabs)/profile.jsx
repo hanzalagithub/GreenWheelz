@@ -19,7 +19,7 @@ const Profile = () => {
   };
 
   return (
-    <SafeAreaView className="bg-green-900 h-full">
+    <SafeAreaView className="h-full">
       <FlatList
         ListHeaderComponent={() => (
           <View className="w-full flex justify-center items-center mt-6 mb-12 px-4">

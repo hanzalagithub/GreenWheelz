@@ -2,13 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { CameraView, Camera } from "expo-camera";
 import { getStoredQRCode, validateQRCode } from "../lib/appwrite";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from 'expo-router';
 
-export default function QrScanner({ onClose }) {
+// Your ESP32's IP address (change it according to your network)
+const ESP32_IP = "http://192.168.43.161"; 
+
+export default function QrScanner() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [storedQRCode, setStoredQRCode] = useState(null);
   const router = useRouter();
+  const { selectedParking } = useLocalSearchParams();
 
   useEffect(() => {
     const getCameraPermissions = async () => {
@@ -37,9 +41,10 @@ export default function QrScanner({ onClose }) {
       const isValidQRCode = await validateQRCode(data);
       console.log("Is QR Code Valid?", isValidQRCode);
       if (isValidQRCode && data === storedQRCode) {
+        
         router.push({
-          pathname: 'RideStarted',
-          params: { qrCode: data }
+          pathname: 'PaymentScreen',
+          params: { selectedParking },
         });
       } else {
         Alert.alert("Error", "Invalid or unmatched QR code");
@@ -49,11 +54,11 @@ export default function QrScanner({ onClose }) {
       Alert.alert("Error", "Failed to process QR code");
     }
   };
-  
+
   const handleCloseScanner = () => {
-    if (onClose) {
-      onClose();
-    }
+    
+      router.back();
+    
   };
 
   if (hasPermission === null) {

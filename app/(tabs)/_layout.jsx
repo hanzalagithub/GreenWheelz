@@ -67,9 +67,9 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.bookmark}
+                icon={icons.history}
                 color={color}
-                name="Bookmark"
+                name="History"
                 focused={focused}
               />
             ),
@@ -83,9 +83,9 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.plus}
+                icon={icons.phone}
                 color={color}
-                name="Create"
+                name="Call us"
                 focused={focused}
               />
             ),
