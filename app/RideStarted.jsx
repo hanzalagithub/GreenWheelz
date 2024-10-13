@@ -13,6 +13,7 @@ const parkingIcon = require('../assets/icons/parking.webp');
 export default function RideStarted() {
   const [bikeLocation, setBikeLocation] = useState(null);
   const [destination, setDestination] = useState(null);
+  const [destinationTitle, setDestinationTitle] = useState("");
   const [distanceTraveled, setDistanceTraveled] = useState(0);
   const [route, setRoute] = useState([]);
   const [initialRegion, setInitialRegion] = useState(null);
@@ -27,6 +28,7 @@ export default function RideStarted() {
         latitude: parsedParking.latitude,
         longitude: parsedParking.longitude,
       });
+      setDestinationTitle(parsedParking.title);
       if (bikeLocation) {
         setInitialRegion({
           latitude: (parsedParking.latitude + bikeLocation.latitude) / 2,
@@ -100,7 +102,7 @@ export default function RideStarted() {
        try{
 
          const user = await getCurrentUser(); // Get the current user
-         const rideData = await saveRideHistory(user.$id, destination, distanceTraveled);
+         const rideData = await saveRideHistory(user.$id, destination, destinationTitle, distanceTraveled);
          console.log('Ride saved:', rideData);
          router.push({ pathname: '/', params: { totalCharge } });
         } catch (error){
@@ -113,19 +115,36 @@ export default function RideStarted() {
   return (
     <View style={styles.container}>
       <Text>Ride in progress...</Text>
-      {bikeLocation && destination && initialRegion ? (
+      {destination ? (
         <MapView
           style={styles.map}
-          initialRegion={initialRegion}
-          region={initialRegion}
+          initialRegion={{
+            latitude: destination.latitude,
+            longitude: destination.longitude,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+          }}
+          region={bikeLocation ? {
+            latitude: (destination.latitude + bikeLocation.latitude) / 2,
+            longitude: (destination.longitude + bikeLocation.longitude) / 2,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+          } : {
+            latitude: destination.latitude,
+            longitude: destination.longitude,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+          }}
         >
-          <Marker coordinate={bikeLocation} title="Bike Location">
-          <Image source={bikeMarker} style={styles.markerIcon} />
-          </Marker>
-          <Marker coordinate={destination} title="destination">
+          {bikeLocation && (
+            <Marker coordinate={bikeLocation} title="Bike Location">
+              <Image source={bikeMarker} style={styles.markerIcon} />
+            </Marker>
+          )}
+          <Marker coordinate={destination} title="Destination">
             <Image source={parkingIcon} style={styles.markerIcon} />
           </Marker>
-          {route.length === 2 && (
+          {bikeLocation && destination && route.length === 2 && (
             <Polyline
               coordinates={route}
               strokeColor="blue"
@@ -136,15 +155,15 @@ export default function RideStarted() {
       ) : (
         <Text style={styles.loadingText}>Loading map...</Text>
       )}
+  
       <View style={styles.qrButtonContainer}>
-
-          <TouchableOpacity style={styles.qrButton} onPress={endRide}>
-              <Text style={styles.qrButtonText}>End the Ride</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.qrButton} onPress={endRide}>
+          <Text style={styles.qrButtonText}>End the Ride</Text>
+        </TouchableOpacity>
       </View>
     </View>
-  );
-}
+  )};
+  
 
 const styles = StyleSheet.create({
   container: {

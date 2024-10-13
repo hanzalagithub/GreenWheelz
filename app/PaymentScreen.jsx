@@ -66,7 +66,7 @@ const PaymentScreen = () => {
     try {
       const paymentAmount = amount ? parseInt(amount) * 100 : 500; // Default amount is 5
 
-      const response = await fetch('https://gold-sheep-ask.loca.lt/create-payment-intent', {
+      const response = await fetch('https://tricky-geese-trade.loca.lt/create-payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

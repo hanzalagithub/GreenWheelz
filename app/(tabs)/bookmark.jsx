@@ -19,7 +19,7 @@ const Bookmark = () => {
   const renderItem = ({ item }) => (
     <View style={styles.item}>
       <Text style={styles.title}>Destination:</Text>
-      <Text style={styles.text}>{item.destination}</Text>
+      <Text style={styles.text}>{item.destinationTitle}</Text>
       <Text style={styles.title}>Date:</Text>
       <Text style={styles.text}>{new Date(item.date).toLocaleDateString()}</Text>
       <Text style={styles.title}>Distance:</Text>

@@ -36,9 +36,7 @@ export default function Mapp() {
         } else {
           console.error('No valid data found:', data);
         }
-      } catch (error) {
-        console.error('Error fetching bike location:', error);
-      }
+      } catch (error) {}
     };
 
     fetchBikeLocation();
