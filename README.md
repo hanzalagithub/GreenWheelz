@@ -101,7 +101,7 @@ Contributions are welcome! Please fork the repository, make your changes, and su
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the LICENSE file for details.https://github.com/hanzalagithub/GreenWheelz/blob/368a294fbbbfa4aeddda70dbaec52c3b360cb05e/LICENSE
 
 ---
 
